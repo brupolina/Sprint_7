@@ -54,7 +54,7 @@ public class OrderCreationTest extends OrderSteps {
     @Test
     @DisplayName("Создание заказа.")
     @Description("Создание заказа самоката в двух цветовых решениях.")
-    public  void checkDifferentColoursForOrder() {
+    public  void checkDifferentColoursForOrderTest() {
         CreateOrder createOrder = new CreateOrder(firstName, lastName, address, metroStation, phone, rentTime, deliveryDate, comment, colour);
         Response response = sendPostRequestForCreatingOrder(createOrder);
         trackId = checkStatus201ForCreatingOrder(response);

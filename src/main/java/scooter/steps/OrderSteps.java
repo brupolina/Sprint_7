@@ -13,7 +13,7 @@ import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class OrderSteps extends BaseHttpClient {
-    @Step("Запрос POST на /api/v1/orders для создания заказа.")
+    @Step("Запрос POST на /api/v1/orders для создания заказа")
     public Response sendPostRequestForCreatingOrder(CreateOrder order) {
         return requestSpecification
                 .and()
@@ -22,7 +22,7 @@ public class OrderSteps extends BaseHttpClient {
                 .post(URL.ORDER_CREATE_POST);
     }
 
-    @Step("Статус ответа: 201, поле 'track' со значением.")
+    @Step("Статус ответа: 201, поле 'track' со значением")
     public String checkStatus201ForCreatingOrder(Response response) {
         response.then()
                 .statusCode(SC_CREATED)
@@ -32,7 +32,7 @@ public class OrderSteps extends BaseHttpClient {
 
     }
 
-    @Step("Заказ отменен.")
+    @Step("Заказ отменен")
     public void cancelOrder(String track) {
         requestSpecification
                 .queryParam("track", track)
@@ -40,14 +40,14 @@ public class OrderSteps extends BaseHttpClient {
                 .then().statusCode(SC_OK);
     }
 
-    @Step("Отправка запроса GET на /api/v1/orders для получения списков заказов.")
+    @Step("Отправка запроса GET на /api/v1/orders для получения списков заказов")
     public Response sendGetRequestForCreatingOrder() {
         return requestSpecification
                 .get(URL.ORDER_LIST_GET);
 
     }
 
-    @Step("Статус ответа: 200, ответ содержит заказ.")
+    @Step("Статус ответа: 200, ответ содержит заказ")
     public void checkStatus200AndBody(Response response) {
         response.then()
                 .statusCode(SC_OK)

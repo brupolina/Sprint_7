@@ -9,9 +9,9 @@ import org.junit.Test;
 public class GetOrderListTest extends OrderSteps {
 
     @Test
-    @DisplayName("Получение списка заказов.")
-    @Description("Проверяем наличие содержимого в полученном списке.")
-    public void checkOrderListHasBody() {
+    @DisplayName("Получение списка заказов")
+    @Description("Проверяем наличие содержимого в полученном списке")
+    public void checkOrderListHasBodyTest() {
         Response response = sendGetRequestForCreatingOrder();
         checkStatus200AndBody(response);
     }

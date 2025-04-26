@@ -1,4 +1,5 @@
 import com.github.javafaker.Faker;
+import org.junit.Before;
 import scooter.parameters.CreateOrder;
 import scooter.steps.OrderSteps;
 
@@ -16,7 +17,8 @@ import java.util.List;
 import java.util.Random;
 
 @RunWith(Parameterized.class)
-public class OrderCreationTest extends OrderSteps {
+public class OrderCreationTest extends BaseTest {
+    private OrderSteps orderSteps;
     Faker faker = new Faker();
     private final String firstName = faker.name().firstName();
     private final String lastName = faker.name().lastName();
@@ -24,7 +26,7 @@ public class OrderCreationTest extends OrderSteps {
     Integer metroStation = new Random().nextInt(10);
     String phone = faker.phoneNumber().cellPhone();
     Integer rentTime = new Random().nextInt(10);
-    String deliveryDate = String.format("2025-01-%d",new Random().nextInt(29));
+    String deliveryDate = String.format("2025-01-%d", new Random().nextInt(29));
     String comment = faker.name().fullName();
     private final List<String> colour;
     private String trackId = null;
@@ -33,11 +35,17 @@ public class OrderCreationTest extends OrderSteps {
         this.colour = colour;
     }
 
+    @Before
+    public void setUp() {
+        super.setUp();
+        orderSteps = new OrderSteps();
+    }
+
     @After
     @Step("Постусловие: очистка данных - отмена созданного заказа.")
-    public  void cleanData() {
+    public void cleanData() {
         if (trackId != null) {
-            cancelOrder(trackId);
+            orderSteps.cancelOrder(trackId);
         }
     }
 
@@ -54,9 +62,9 @@ public class OrderCreationTest extends OrderSteps {
     @Test
     @DisplayName("Создание заказа.")
     @Description("Создание заказа самоката в двух цветовых решениях.")
-    public  void checkDifferentColoursForOrderTest() {
+    public void checkDifferentColoursForOrderTest() {
         CreateOrder createOrder = new CreateOrder(firstName, lastName, address, metroStation, phone, rentTime, deliveryDate, comment, colour);
-        Response response = sendPostRequestForCreatingOrder(createOrder);
-        trackId = checkStatus201ForCreatingOrder(response);
+        Response response = orderSteps.sendPostRequestForCreatingOrder(createOrder);
+        trackId = orderSteps.checkStatus201ForCreatingOrder(response);
     }
 }
